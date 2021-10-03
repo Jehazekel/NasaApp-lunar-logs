@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% block link %}{% endblock %}
+	<title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <nav id="messages" class="white black-text" style="padding: 10px">
+            <div class="nav-wrapper">
+                <ul class="flashes">
+                {% for message in messages %}
+                  <li><h5>{{ message }}</h5></li>
+                {% endfor %}
+                </ul>
+            </div>
+          </nav>
+          
+          {% endif %}
+        {% endwith %}
+    <main>
+	    {% block main %} {% endblock %}
+    </main>
+
+</body>

@@ -1,0 +1,27 @@
+{% extends "form-layout.html" %}
+
+{% block link %}
+<link rel="stylesheet" href="{{ url_for('static', filename='sign-up.css') }}">
+{% endblock %}
+
+{% block title %}Sign Up Form{% endblock %}
+
+{{ super() }}
+
+
+{% block main %} 
+
+    <div class="form-container">
+      <form action="/login" method="POST">
+      
+        <div><label for="username">Username</label><input type="text" name="username" autocomplete required></div>
+        <div><label for="password">Password</label><input type="password" name="password" required></div> 
+        
+        <div>
+        <button type="submit"> Submit </button>
+        <a href="/signup">Sign up? </a>
+        </div>
+      </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+ crossorigin="anonymous">
+</script>
+<body>
+	<header>
+		<div>
+			<h1>The |UNIT|</h1>
+		</div>
+		<nav class="header-tabs">
+			<ul>
+				{% block navbar %} {% endblock %}
+			</ul>
+			<div class="moon"></div>
+
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+            <div id="messages"class="nav-wrapper"style="padding: 10px">
+                <ul class="flashes">
+                {% for message in messages %}
+                  <li><h5>{{ message }}</h5></li>
+                {% endfor %}
+                </ul>
+            </div>
+          
+          {% endif %}
+      {% endwith %}
+		</nav>
+    
+	</header>
+
+    <main>
+	    {% block main %} {% endblock %}
+    </main>
+
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function() {
+        socket.emit('my event', {data: '{{current_user.username}} connected!'});
+    });
+
+    // socket.on('my_event', (msg)=>{
+    //   document.getElementById('message').innerHTML += msg; 
+    // });
+
+
+    // function sendMsg(){
+    //   let msg = document.getElementById('text_message').value;
+    //   console.log(msg)
+    //   console.log('\n\n\n\n')
+    //   socket.send(
+    //     msg
+    //   );
+    // }
+
+    {% block js%} {% endblock %}
+    
+    socket.on('new_log', (msg)=>{
+      //add new log
+      //document.getElementById('message').innerHTML += msg; 
+      console.log(msg)
+      window.location.reload(true);
+     });
+    
+    // socket.on('message_repsonse', (msg)=>{
+    //   console.log(`we received '${msg['response']}' from the server!!`);
+      
+    //   document.getElementById('messages').innerHTML += msg["response"]; 
+    // })
+
+    
+</script>
+</body>
